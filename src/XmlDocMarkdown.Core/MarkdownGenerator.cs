@@ -129,7 +129,7 @@ namespace XmlDocMarkdown.Core
 							{
 								foreach (var method in typeInfo.TypeInfo.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance)?.Where(item => !item.IsAbstract && !s_getterOrSetterRegex.IsMatch(item.Name)))
 								{
-									writer.WriteLine($" | > <font size=\"1\">*{method.Name}({(method.GetParameters()?.Length > 0 ? string.Join(", ", method.GetParameters()?.Select(param => $"{param.ParameterType.Name} {param.Name}")) : "")})*</font>  | <font size=\"1\">*{GetShortSummaryMarkdown(xmlDocAssembly, method, context)}*</font> |");
+									writer.WriteLine($" | > <font size=\"1\">*{method.Name} ({(method.GetParameters()?.Length > 0 ? string.Join(", ", method.GetParameters()?.Select(param => $"{param.ParameterType.Name} {param.Name}")) : "")})*</font>  | <font size=\"1\">*{GetShortSummaryMarkdown(xmlDocAssembly, method, context)}*</font> |");
 								}
 							}
 						}
