@@ -129,7 +129,10 @@ namespace XmlDocMarkdown.Core
 							{
 								foreach (var method in typeInfo.TypeInfo.GetMethods(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Instance)?.Where(item => !item.IsAbstract && !s_getterOrSetterRegex.IsMatch(item.Name)))
 								{
-									writer.WriteLine($" | > <font size=\"1\">*{method.Name} ({(method.GetParameters()?.Length > 0 ? string.Join(", ", method.GetParameters()?.Select(param => $"{param.ParameterType.Name} {param.Name}")) : "")})*</font>  | <font size=\"1\">*{GetShortSummaryMarkdown(xmlDocAssembly, method, context)}*</font> |");
+									var methodDesc = GetShortSummaryMarkdown(xmlDocAssembly, method, context);
+									if (!string.IsNullOrWhiteSpace(methodDesc))
+										methodDesc = $"<font size=\"1\" color=gray>*{methodDesc}*</font>";
+									writer.WriteLine($" | > <font size=\"1\" color=gray>*[{method.Name}]({$"{GetNamespaceUriName(typeInfo.Namespace)}/{GetTypeUriName(typeInfo.TypeInfo)}/{GetMemberUriName(method)}{extension}"}) ({(method.GetParameters()?.Length > 0 ? string.Join(", ", method.GetParameters()?.Select(param => $"{param.ParameterType.Name} {param.Name}")) : "")})*</font>  | {methodDesc} |");
 								}
 							}
 						}
